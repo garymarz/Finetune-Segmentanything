@@ -11,10 +11,10 @@ pip install -e .
 ```
 
 # Checkpoint
-Here we take vit_l as an example. You can use vit_B or vit_h according to your personal needs.
-`ViT-L SAM` [checkpoint](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth) 
-`ViT-B SAM` [checkpoint](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)
-`ViT-H SAM` [checkpoint](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)
+Here we take vit_l as an example. You can use vit_B or vit_h according to your personal needs.    
+`vit_l` [ViT-L SAM model](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth)    
+`vit_b` [ViT-B SAM model](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)    
+`vit_h` [ViT-H SAM model](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)    
 # Data
 trainingdata     
 # Training    
