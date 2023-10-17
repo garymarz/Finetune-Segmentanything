@@ -9,6 +9,6 @@ pip install git+https://github.com/facebookresearch/segment-anything.git
 cd Finetune-Segmentanything    
 ```
 
-#checkpoint
-Download the model checkpoint 
+# checkpoint
+Download the `ViT-L SAM` [checkpoint](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth) 
 # Data
