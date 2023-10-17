@@ -1,6 +1,6 @@
 import os
 # set up visible device
-os.environ['CUDA_VISIBLE_DEVICES'] = "2,3,5"
+# os.environ['CUDA_VISIBLE_DEVICES'] = "2,3,5"
 
 import numpy as np
 import os
@@ -176,8 +176,8 @@ if __name__ == "__main__":
         mask_decoder=sam_model.mask_decoder,
         prompt_encoder=sam_model.prompt_encoder)
     
-    medsam_model = nn.DataParallel(medsam_model, device_ids=[0,1,2]).to(device)
-    # medsam_model = nn.DataParallel(medsam_model).to(device)
+    # medsam_model = nn.DataParallel(medsam_model, device_ids=[0,1,2]).to(device)
+    medsam_model = nn.DataParallel(medsam_model).to(device)
     medsam_model.train()
     img_mask_encdec_params = list(medsam_model.module.image_encoder.parameters()) + list(medsam_model.module.mask_decoder.parameters())
     optimizer = torch.optim.AdamW(img_mask_encdec_params, lr=args.lr, weight_decay=args.weight_decay)
