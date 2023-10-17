@@ -31,7 +31,7 @@ class NpzDataset(Dataset):
     def __init__(self, data_root, root):
         self.data_root = data_root
         self.npz_files = glob(os.path.join(data_root,root)+'\\*.json')
-        self.d = {'defect':1,'Com':1, 'Date':1, 'Drain':1, 'Drainsub':1, 'Dsource':1, 'Gate':1, 'IN':1, 'MIT':1, 'Mashcom':1, 'Source':1}
+        self.d = {'defect':1,'Com':1, 'Date':1}
         print('Loading',data_root)
         
     def __len__(self):
@@ -162,7 +162,7 @@ if __name__ == "__main__":
     parser.add_argument("--checkpoint", type=str, default="vit_l.pth")
     
     parser.add_argument("--model_save_path", type=str, default="fintune_sam")
-    parser.add_argument("--data_root", type=str, default="SAM_trianingdata") # "D:\\sam\\dataset\\SAM_trianingdata"
+    parser.add_argument("--data_root", type=str, default="SAM_trianingdata")
     args = parser.parse_args()
     device = torch.device("cuda:0" if torch.cuda.is_available() else 'cpu')
     model_type = args.model_type
