@@ -43,18 +43,18 @@ class NpzDataset(Dataset):
         data = json.load(d)
         image = cv2.imread(self.data_root+'\\images\\'+data["image_name"])
         image = cv2.resize(image,(1024,1024))
-        gt2D = io.imread(self.data_root+'\\masks\\'+data["gt_data"])
-        gt2D = transform.resize(
-            gt2D == 255,
+        mask = io.imread(self.data_root+'\\masks\\'+data["mask_data"])
+        mask = transform.resize(
+            mask == 255,
             (1024, 1024),
             order=0,
             preserve_range=True,
             mode="constant")
-        gt2D = np.uint8(gt2D)
-        H, W = gt2D.shape
+        mask = np.uint8(mask)
+        H, W = mask.shape
         
-        y_indices, x_indices = np.where(gt2D > 0)
-        points = [[x,y] for y,x in zip(*np.where(gt2D > 0))]
+        y_indices, x_indices = np.where(mask > 0)
+        points = [[x,y] for y,x in zip(*np.where(mask > 0))]
         if len(points) > 0:
             points = points[int(len(points)/2)]
         else:
@@ -84,7 +84,7 @@ class NpzDataset(Dataset):
         box = sam_trans.apply_boxes(box_np, (H, W))
         points = sam_trans.apply_coords(points, (H, W))
 
-        return image_data_pre.float(), torch.Tensor(box).float(), torch.Tensor(points).float(), torch.Tensor([self.d[data["labels"]]]).float(), torch.Tensor([gt2D.tolist()]).long()
+        return image_data_pre.float(), torch.Tensor(box).float(), torch.Tensor(points).float(), torch.Tensor([self.d[data["labels"]]]).float(), torch.Tensor([mask.tolist()]).long()
 
 class FULLSAM(nn.Module):
     def __init__(
@@ -200,7 +200,7 @@ if __name__ == "__main__":
         focal, dice, val_focal, val_dice, val_epoch_loss, mask_iou, seg = 0, 0, 0, 0, 0, 0, 0
         # train
         s = 0
-        for steps, (image, box, points, labels, gt2D) in enumerate(train_dataloader):
+        for steps, (image, box, points, labels, mask) in enumerate(train_dataloader):
             s += 1
             image = image.to(device)
             pt = (points.to(device), labels.to(device))
@@ -209,7 +209,7 @@ if __name__ == "__main__":
             mask_predictions = medsam_model(image, box, pt)
             
             masks = mask_predictions.squeeze(1).flatten(1)
-            label = gt2D.to(device).flatten(1)
+            label = mask.to(device).flatten(1)
             loss_focal = sigmoid_focal_loss(masks, label.float(), num_masks)
             loss_dice = dice_loss(masks, label.float(),num_masks)
             loss = loss_dice + loss_focal
@@ -226,7 +226,7 @@ if __name__ == "__main__":
         print(f'EPOCH: {epoch}, Loss: {round(epoch_loss, 4)}, focal_loss: {round(focal, 4)}, dice_loss: {round(dice, 4)}')
         # if epoch % 1  == 0:
         #     val_focal, val_dice, val_epoch_loss, val_iou, b_loss = 0, 0, 0, 0, 0
-        #     for step, (image, box, points, labels, gt2D) in enumerate(tqdm(val_dataloader)):
+        #     for step, (image, box, points, labels, mask) in enumerate(tqdm(val_dataloader)):
         #         image = image.to(device)
         #         pt = (points.to(device), labels.to(device))
         #         #image = sam_model.preprocess(image)
@@ -234,7 +234,7 @@ if __name__ == "__main__":
         #         mask_predictions = medsam_model(image, box, pt)
         #         num_masks = sum([len(b) for b in box])
         #         masks = mask_predictions.squeeze(1).flatten(1)
-        #         label = gt2D.to(device).flatten(1)
+        #         label = mask.to(device).flatten(1)
         #         val_loss_focal = seg_loss(masks, label)
         #         val_loss_dice = ce_loss(masks, label.float())
         #         val_loss = val_loss_dice + val_loss_focal
