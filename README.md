@@ -13,3 +13,4 @@ pip install -e .
 # checkpoint
 Download the `ViT-L SAM` [checkpoint](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth) 
 # Data
+trainingdata     
