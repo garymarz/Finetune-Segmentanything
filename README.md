@@ -10,7 +10,9 @@ cd Finetune-Segmentanything
 pip install -e . 
 ```
 
-# checkpoint
+# Checkpoint
 Download the `ViT-L SAM` [checkpoint](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth) 
 # Data
 trainingdata     
+# Training    
+`python train.py --batch 32 --dataroot ./trainingdata `
