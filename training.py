@@ -162,7 +162,7 @@ if __name__ == "__main__":
     parser.add_argument("--checkpoint", type=str, default="vit_l.pth")
     
     parser.add_argument("--model_save_path", type=str, default="fintune_sam")
-    parser.add_argument("--data_root", type=str, default="D:\\yangu\\dataset\\SAM_trianingdata") # "D:\\sam\\dataset\\SAM_trianingdata"
+    parser.add_argument("--data_root", type=str, default="SAM_trianingdata") # "D:\\sam\\dataset\\SAM_trianingdata"
     args = parser.parse_args()
     device = torch.device("cuda:0" if torch.cuda.is_available() else 'cpu')
     model_type = args.model_type
