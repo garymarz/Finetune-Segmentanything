@@ -6,7 +6,8 @@ Install [Pytorch](https://pytorch.org/):
 Install Segment Anything:    
 ```
 pip install git+https://github.com/facebookresearch/segment-anything.git    
-cd Finetune-Segmentanything    
+cd Finetune-Segmentanything
+pip install -e . 
 ```
 
 # checkpoint
