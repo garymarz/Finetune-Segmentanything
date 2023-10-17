@@ -1,16 +1,6 @@
 import os
+# set up visible device
 os.environ['CUDA_VISIBLE_DEVICES'] = "2,3,5"
-def script_method(fn, _rcb=None):
-    return fn
-
-def script(obj, optimize=True, _frames_up=0, _rcb=None):
-    return obj
-
-import torch.jit
-script_method1 = torch.jit.script_method
-script1 = torch.jit.script
-torch.jit.script_method = script_method
-torch.jit.script = script
 
 import numpy as np
 import os
@@ -21,7 +11,6 @@ from tqdm import tqdm
 import torch
 from torch.utils.data import Dataset, DataLoader
 from collections.abc import Callable
-#from monai.utils import DiceCEReduction, LossReduction, Weight, look_up_option, pytorch_after
 from torch.nn.modules.loss import _Loss
 from glob import glob
 import json
@@ -31,7 +20,6 @@ from segment_anything import sam_model_registry
 from segment_anything.utils.transforms import ResizeLongestSide
 
 import segmentation_models_pytorch as smp
-#from transformers.models.maskformer.modeling_maskformer import dice_loss, sigmoid_focal_loss
 import torch.nn.functional as F
 import torch.nn as nn
 
