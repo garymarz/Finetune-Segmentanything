@@ -178,13 +178,10 @@ if __name__ == "__main__":
     
     medsam_model = nn.DataParallel(medsam_model, device_ids=[0,1,2]).to(device)
     # medsam_model = nn.DataParallel(medsam_model).to(device)
-    # Set up the optimizer, hyperparameter tuning will improve performance here
-    # optimizer = torch.optim.Adam(sam_model.mask_decoder.parameters(), lr=1e-5, weight_decay=0.001)
     medsam_model.train()
     img_mask_encdec_params = list(medsam_model.module.image_encoder.parameters()) + list(medsam_model.module.mask_decoder.parameters())
     optimizer = torch.optim.AdamW(img_mask_encdec_params, lr=args.lr, weight_decay=args.weight_decay)
-    # seg_loss = dice_loss()
-    # ce_loss = sigmoid_focal_loss()
+    
     num_epochs = 1000
     losses = []
     best_loss = 100
@@ -197,7 +194,7 @@ if __name__ == "__main__":
     for epoch in range(num_epochs):
         epoch_loss = 0
         print('Training SAM epoch:',epoch)
-        focal, dice, val_focal, val_dice, val_epoch_loss, mask_iou, seg = 0, 0, 0, 0, 0, 0, 0
+        focal, dice, val_focal, val_dice, val_epoch_loss = 0, 0, 0, 0, 0, 0, 0
         # train
         s = 0
         for steps, (image, box, points, labels, mask) in enumerate(train_dataloader):
@@ -224,6 +221,7 @@ if __name__ == "__main__":
         focal /= s
         dice  /= s
         print(f'EPOCH: {epoch}, Loss: {round(epoch_loss, 4)}, focal_loss: {round(focal, 4)}, dice_loss: {round(dice, 4)}')
+        # val
         # if epoch % 1  == 0:
         #     val_focal, val_dice, val_epoch_loss, val_iou, b_loss = 0, 0, 0, 0, 0
         #     for step, (image, box, points, labels, mask) in enumerate(tqdm(val_dataloader)):
