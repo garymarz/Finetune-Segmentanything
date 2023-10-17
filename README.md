@@ -18,4 +18,4 @@ Here we take vit_l as an example. You can use vit_B or vit_h according to your p
 # Data
 trainingdata     
 # Training    
-`python train.py --batch 32 --dataroot ./trainingdata --model_type vit_l --checkpoint sam_vit_l_0b3195.pth`
+`python training.py --batch 32 --dataroot ./trainingdata --model_type vit_l --checkpoint sam_vit_l_0b3195.pth`
