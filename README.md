@@ -11,8 +11,11 @@ pip install -e .
 ```
 
 # Checkpoint
-Download the `ViT-L SAM` [checkpoint](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth) 
+Here we take vit_l as an example. You can use vit_B or vit_h according to your personal needs.
+`ViT-L SAM` [checkpoint](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth) 
+`ViT-B SAM` [checkpoint](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)
+`ViT-H SAM` [checkpoint](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)
 # Data
 trainingdata     
 # Training    
-`python train.py --batch 32 --dataroot ./trainingdata `
+`python train.py --batch 32 --dataroot ./trainingdata --model_type vit_l --checkpoint sam_vit_l_0b3195.pth`
